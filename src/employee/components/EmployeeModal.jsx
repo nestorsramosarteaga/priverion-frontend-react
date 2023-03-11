@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Swal from 'sweetalert2';
 import '../../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 
 import Modal from 'react-modal';
+import { useEmployeeStore, useUiStore } from '../../hooks';
 
 
 const customStyles = {
@@ -20,13 +21,15 @@ Modal.setAppElement('#root');
 
 export const EmployeeModal = () => {
 
-    const [ isOpen, setIsOpen ] = useState(true);
+    const { isEmployeeModalOpen, closeEmployeeModal } = useUiStore();
+    const { activeEmployee } = useEmployeeStore();
+
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
     const [formValues, setFormValues] = useState({
-        name: 'My Name',
-        email: 'myname@mail.com',
-        phone: '+573105113210'
+        name: '',
+        email: '',
+        phone: ''
     });
 
     const nameClass = useMemo( () => {
@@ -63,8 +66,13 @@ export const EmployeeModal = () => {
         })
     }
 
+    useEffect(() => {
+        setFormValues({ ...activeEmployee })      
+    }, [activeEmployee])
+    
+
     const onCloseModal = () => {
-        setIsOpen(false)
+        closeEmployeeModal();
     }
 
     const onSubmit = ( event ) => {
@@ -92,8 +100,8 @@ export const EmployeeModal = () => {
 
   return (
     <Modal
-        isOpen={ isOpen }
-        onRequestClose={ onCloseModal }
+        isOpen={ isEmployeeModalOpen }
+        onRequestClose={ ()=>closeEmployeeModal() }
         style={customStyles}
         className="modal"
         overlayClassName="modal-fondo"
@@ -107,7 +115,6 @@ export const EmployeeModal = () => {
                 <label>Name</label>
                 <input
                     type="text"
-                    autocomplete="off" 
                     className={ `form-control ${ nameClass }` } 
                     placeholder="Name"
                     name="name"
@@ -120,7 +127,6 @@ export const EmployeeModal = () => {
                 <label>Email</label>
                 <input
                     type="text"
-                    autocomplete="off" 
                     className={ `form-control ${ emailClass }` }  
                     placeholder="Email" 
                     name="email"
@@ -133,7 +139,6 @@ export const EmployeeModal = () => {
                 <label>Phone</label>
                 <input
                     type="text"
-                    autocomplete="off" 
                     className={ `form-control ${ phoneClass }` }  
                     placeholder="Phone"
                     name="phone"
