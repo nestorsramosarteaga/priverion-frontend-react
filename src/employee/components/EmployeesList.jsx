@@ -1,16 +1,17 @@
-import axios from "axios";
 import { useEffect, useState } from "react"
+import axios from "axios";
+import { useUiStore, useEmployeeStore } from "../../hooks";
 import { Link } from "react-router-dom";
 
 const endpoint = "http://api.test/api/v1";
 
 export const EmployeesList = () => {
     
-
-    const [employees, setEmployees] = useState([])
+    const { openEmployeeModal } = useUiStore();
+    const { employees, setActiveEmployee } = useEmployeeStore();
 
     useEffect( () => {
-      getEmployees()
+        getEmployees()
     })
     
     const getEmployees = async () => {
@@ -27,7 +28,7 @@ export const EmployeesList = () => {
         <div className="d-flex flex-column justify-content-center">
           
           <div className="px-3">
-            <button className="btn btn-primary">Create Employee</button>
+            <button className="btn btn-primary" onClick={ ()=>openEmployeeModal() }>Create Employee</button>
           </div> 
 
           <div className="w-75 p-3"> 
@@ -50,7 +51,8 @@ export const EmployeesList = () => {
                             <td> {employee.phone} </td>
                             <td>
                               <Link 
-                                to={`/edit/${employee.id}`}
+                                //to={`/edit/${employee.id}`}
+                                onClick={ () => { setActiveEmployee(employee); openEmployeeModal() } }
                                 className="btn btn-warning"
                               >
                                 <i className="fa-solid fa-pen"></i>
