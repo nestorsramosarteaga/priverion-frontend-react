@@ -1,9 +1,12 @@
-import { Navbar } from "../components/Navbar"
+import { EmployeeModal, EmployeesList, Navbar } from "../"
 
 export const EmployeePage = () => {
     return (
         <>
             <Navbar />
+            <EmployeesList />
+
+            <EmployeeModal />         
         </>
     )
 }
