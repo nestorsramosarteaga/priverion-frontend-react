@@ -1,6 +1,9 @@
+import { Navbar } from "../components/Navbar"
 
 export const EmployeePage = () => {
-  return (
-    <div>EmployeePage</div>
-  )
+    return (
+        <>
+            <Navbar />
+        </>
+    )
 }
