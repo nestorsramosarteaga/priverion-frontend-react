@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { backendApi } from '../api';
+import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store';
 
 export const useAuthStore = () => {
 
@@ -8,12 +9,17 @@ export const useAuthStore = () => {
 
 
     const startLogin = async({ email, password }) => {
-        console.log({ backendApi });
+        dispatch( onChecking() );
         try {
-            const resp = await backendApi.post('/auth', { email, password });
-            console.log(resp);
+            const { data } = await backendApi.post('/auth', { email, password });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init-date', new Date().getTime() );
+            dispatch( onLogin({ id: data.id, name: data.name, email: data.email, is_admin: data.is_admin }) );
         } catch (error) {
-            console.log(error);
+            dispatch( onLogout('Incorrect credentials') );
+            setTimeout( () => {
+                dispatch( clearErrorMessage() );
+            }, 10);
         }
     }
 

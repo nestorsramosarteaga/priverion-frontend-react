@@ -1,4 +1,6 @@
 
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 import { useForm, useAuthStore } from '../../hooks';
 
 import './LoginPage.css';
@@ -18,7 +20,7 @@ const registerFormsField = {
 
 export const LoginPage = () => {
 
-    const { startLogin } = useAuthStore();
+    const { startLogin, errorMessage } = useAuthStore();
 
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm( loginFormsField );
     const { registerName, registerEmail, registerPassword, registerPasswordConfirmation, onInputChange: onRegisterInputChange } = useForm( registerFormsField );
@@ -33,6 +35,15 @@ export const LoginPage = () => {
         event.preventDefault();
         console.log({ registerName, registerEmail, registerPassword, registerPasswordConfirmation });
     }
+
+    useEffect(() => {
+        if ( errorMessage !== undefined ) {
+            Swal.fire('Authentication error', 'Incorrect credentials', 'error');
+        }
+    }, [errorMessage])
+    
+
+
 
     return (
         <div className="container login-container">
