@@ -2,35 +2,36 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { useUiStore, useEmployeeStore } from "../../hooks";
 import { Link } from "react-router-dom";
+import backendApi from "../../api/backendApi";
 
-const endpoint = "http://api.test/api/v1";
 
 export const EmployeesList = () => {
     
     const { openEmployeeModal } = useUiStore();
-    const { employees, setActiveEmployee } = useEmployeeStore();
+    const { activeEmployee, startDeletingEmployee, employees, setActiveEmployee } = useEmployeeStore();
 
     useEffect( () => {
         getEmployees()
     })
     
     const getEmployees = async () => {
-        //const {data: allEmployees} = await axios.get(`${endpoint}/employees`)
+        // const {data: allEmployees} = await axios.get(`${backendApi}/employees`)
         //setEmployees(allEmployees.data)
     }
 
-    const onDeleteEmployee = async (id) => {
-        await axios.delete(`${endpoint}/employees/${id}`)
-        getEmployees()
+    const handleDelete = () => {
+        startDeletingEmployee();
+        // try {
+        //     // await axios.delete(`${backendApi}/employees/${id}`)
+        //     getEmployees()
+        // } catch (error) {
+        //     console.log(error);
+        // }      
     }
 
     return (
         <div className="d-flex flex-column justify-content-center">
           
-          <div className="px-3">
-            <button className="btn btn-primary" onClick={ ()=>openEmployeeModal() }>Create Employee</button>
-          </div> 
-
           <div className="w-75 p-3"> 
 
             <table className="table">  
@@ -51,15 +52,16 @@ export const EmployeesList = () => {
                             <td> {employee.phone} </td>
                             <td>
                               <Link 
-                                //to={`/edit/${employee.id}`}
                                 onClick={ () => { setActiveEmployee(employee); openEmployeeModal() } }
-                                className="btn btn-warning"
+                                className="btn btn-warning mx-1"
+                                title="Edit"
                               >
                                 <i className="fa-solid fa-pen"></i>
                               </Link>
                               <button 
-                                onClick={ ()=>onDeleteEmployee(employee.id) }
-                                className="btn btn-danger"
+                                onClick={ () => { setActiveEmployee(employee); handleDelete() }}
+                                className="btn btn-danger mx-1"
+                                title="Delete"
                               >
                                 <i className="fa-solid fa-trash-can"></i>
                                 </button>

@@ -27,21 +27,19 @@ export const employeeSlice = createSlice({
          state.activeEmployee = null;
       },
       onUpdateEmployee: ( state, { payload } ) => {
-         state.employees = state.employees.map( employee => {
-            console.log({employee, payload})
+         state.employees = state.employees.map( employee => {            
             if ( employee.id === payload.id ) {
                return payload;
             }
-
             return employee;
-
          })
       },
-      // onDeleteEmployee: ( ) => {
-
-      // },
+      onDeleteEmployee: ( state ) => {
+         state.employees = state.employees.filter( employee => employee.id !== state.activeEmployee.id );
+         state.activeEmployee = null;
+      },
    }
 });
 
 
-export const { onSetActiveEmployee, onAddEmployee, onUpdateEmployee } = employeeSlice.actions;
+export const { onSetActiveEmployee, onAddEmployee, onUpdateEmployee, onDeleteEmployee } = employeeSlice.actions;
