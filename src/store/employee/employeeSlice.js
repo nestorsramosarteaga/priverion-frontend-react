@@ -1,21 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const tempEmployees =  [{
-    "id": 27,
-    "name": "Nata Guerrero",
-    "email": "maria.arteaga@gmail.com",
-    "phone": "+573225001010"
-}, {
-   "id": 28,
-"name": "Néstor Ramos Arteaga",
-"email": "nestor.ramos@gmail.com",
-"phone": "+573126701433"
-}];
-
 export const employeeSlice = createSlice({
    name: 'employee',
    initialState: {
-      employees: tempEmployees,
+      isLoadingEmployees: true,
+      employees: [],
       activeEmployee: null
    },
    reducers: {
@@ -38,8 +27,18 @@ export const employeeSlice = createSlice({
          state.employees = state.employees.filter( employee => employee.id !== state.activeEmployee.id );
          state.activeEmployee = null;
       },
+      onLoadEmployees: ( state, { payload = [] } ) => {
+         state.isLoadingEmployees = false;
+         // state.employees = payload;
+         payload.forEach( employee => {
+            const exists = state.employees.some( dbEmploy => dbEmploy.id === employee.id )
+            if ( ! exists ) {
+               state.employees.push( employee )
+            }
+         })
+      }
    }
 });
 
 
-export const { onSetActiveEmployee, onAddEmployee, onUpdateEmployee, onDeleteEmployee } = employeeSlice.actions;
+export const { onSetActiveEmployee, onAddEmployee, onUpdateEmployee, onDeleteEmployee, onLoadEmployees } = employeeSlice.actions;

@@ -8,16 +8,11 @@ import backendApi from "../../api/backendApi";
 export const EmployeesList = () => {
     
     const { openEmployeeModal } = useUiStore();
-    const { activeEmployee, startDeletingEmployee, employees, setActiveEmployee } = useEmployeeStore();
+    const { activeEmployee, startDeletingEmployee, employees, setActiveEmployee, startLoadingEmployees } = useEmployeeStore();
 
     useEffect( () => {
-        getEmployees()
-    })
-    
-    const getEmployees = async () => {
-        // const {data: allEmployees} = await axios.get(`${backendApi}/employees`)
-        //setEmployees(allEmployees.data)
-    }
+      startLoadingEmployees()
+    }, []);
 
     const handleDelete = () => {
         startDeletingEmployee();

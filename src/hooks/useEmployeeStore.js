@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { backendApi } from "../api";
-import { onAddEmployee, onDeleteEmployee, onSetActiveEmployee, onUpdateEmployee } from "../store";
+import { onAddEmployee, onDeleteEmployee, onLoadEmployees, onSetActiveEmployee, onUpdateEmployee } from "../store";
 
 
 export const useEmployeeStore = () => {
@@ -36,6 +36,17 @@ export const useEmployeeStore = () => {
         dispatch( onDeleteEmployee() );
     }
 
+
+    const startLoadingEmployees = async () => {
+        try {            
+            const {data:{data}} = await backendApi.get('/employees');
+            dispatch( onLoadEmployees( data ) );
+        } catch (error) {
+            console.log('Error Loading Employees');
+            console.log(error);
+        }
+    }
+
     return {
         //* Properties
         employees, 
@@ -44,6 +55,7 @@ export const useEmployeeStore = () => {
         setActiveEmployee,
         startDeletingEmployee,
         startSavingEvent,
+        startLoadingEmployees,
     }
 
 
