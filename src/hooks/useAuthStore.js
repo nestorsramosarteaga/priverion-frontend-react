@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { backendApi } from '../api';
-import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store';
+import { clearErrorMessage, onChecking, onLogin, onLogout, onLogoutEmployee } from '../store';
 
 export const useAuthStore = () => {
 
@@ -56,6 +56,7 @@ export const useAuthStore = () => {
 
     const startLogout = () => {
         localStorage.clear();
+        dispatch( onLogoutEmployee() );
         dispatch( onLogout() );
     }
 
@@ -69,7 +70,7 @@ export const useAuthStore = () => {
         startLogin,
         startRegister,
         checkAuthToken,
-        startLogout
+        startLogout,
     }
 
 }

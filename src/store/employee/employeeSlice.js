@@ -36,9 +36,21 @@ export const employeeSlice = createSlice({
                state.employees.push( employee )
             }
          })
-      }
+      },
+      onLogoutEmployee: ( state ) => {
+         state.isLoadingEmployees = true,
+         state.employees = [],
+         state.activeEmployee = null
+      },
    }
 });
 
 
-export const { onSetActiveEmployee, onAddEmployee, onUpdateEmployee, onDeleteEmployee, onLoadEmployees } = employeeSlice.actions;
+export const { 
+   onSetActiveEmployee, 
+   onAddEmployee, 
+   onUpdateEmployee, 
+   onDeleteEmployee, 
+   onLoadEmployees, 
+   onLogoutEmployee,
+} = employeeSlice.actions;

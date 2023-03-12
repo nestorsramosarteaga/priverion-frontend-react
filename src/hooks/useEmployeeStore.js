@@ -34,9 +34,7 @@ export const useEmployeeStore = () => {
             Swal.fire('Error Saving data', error.toJSON()?.message ,'error');
             return;
         });
-        dispatch( onAddEmployee({ ...employee, id: data.id }) );            
-        
-                
+        dispatch( onAddEmployee({ ...employee, id: data.id }) );                 
     }
 
     const startDeletingEmployee = (employee) => {
