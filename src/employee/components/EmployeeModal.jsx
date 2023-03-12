@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+import axios from 'axios';
+
 import Swal from 'sweetalert2';
 import '../../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 
-import Modal from 'react-modal';
 import { useEmployeeStore, useUiStore } from '../../hooks';
-
+import backendApi from "../../api/backendApi";
 
 const customStyles = {
     content: {
@@ -22,7 +25,8 @@ Modal.setAppElement('#root');
 export const EmployeeModal = () => {
 
     const { isEmployeeModalOpen, closeEmployeeModal } = useUiStore();
-    const { activeEmployee } = useEmployeeStore();
+    const { activeEmployee, startSavingEvent } = useEmployeeStore();
+    const navigate = useNavigate();
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
@@ -75,7 +79,7 @@ export const EmployeeModal = () => {
         closeEmployeeModal();
     }
 
-    const onSubmit = ( event ) => {
+    const onSubmit = async ( event ) => {
         event.preventDefault();
         setFormSubmitted(true);
 
@@ -94,7 +98,25 @@ export const EmployeeModal = () => {
             return;
         }
 
-        console.log( formValues);
+        //* TODO:
+        await startSavingEvent( formValues );
+
+        closeEmployeeModal();
+        
+        setFormSubmitted(false);
+        
+    }
+
+    const onStoreEmployee = async () => {
+
+        try{
+            // await axios.post(`${backendApi}/employees`, formValues );
+            closeEmployeeModal();
+            navigate('/');
+        } catch (error) {
+            console.error(error);
+        }
+        
     }
 
 

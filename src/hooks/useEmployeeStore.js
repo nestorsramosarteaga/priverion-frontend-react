@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onSetActiveEmployee } from "../store";
+import { onAddEmployee, onSetActiveEmployee } from "../store";
 
 
 export const useEmployeeStore = () => {
@@ -14,6 +14,20 @@ export const useEmployeeStore = () => {
         dispatch( onSetActiveEmployee( employee ) )
     }
 
+    const startSavingEvent = async( employee ) => {
+        //* TODO: go to the backend
+
+        //* Everything OK
+        if ( employee?.id ){
+            // Update
+
+        } else {
+            // Creando
+            dispatch( onAddEmployee({ ...employee, id: new Date().getTime() }) )
+
+        }
+
+    }
 
     return {
         //* Properties
@@ -21,6 +35,7 @@ export const useEmployeeStore = () => {
         activeEmployee,
         //* Methods
         setActiveEmployee,
+        startSavingEvent,
     }
 
 

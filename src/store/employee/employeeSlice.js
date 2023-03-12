@@ -22,8 +22,18 @@ export const employeeSlice = createSlice({
       onSetActiveEmployee: (state, { payload } ) => {
          state.activeEmployee = payload;
       },
+      onAddEmployee: ( state, { payload } ) => {
+         state.employees.push( payload );
+         state.activeEmployee = null;
+      },
+      // onEditEmployee: ( state, { payload } ) => {
+
+      // },
+      // onDeleteEmployee: ( ) => {
+
+      // },
    }
 });
 
 
-export const { onSetActiveEmployee } = employeeSlice.actions;
+export const { onSetActiveEmployee, onAddEmployee } = employeeSlice.actions;
