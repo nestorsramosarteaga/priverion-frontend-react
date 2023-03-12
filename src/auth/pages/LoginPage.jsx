@@ -51,7 +51,7 @@ export const LoginPage = () => {
     return (
         <div className="container login-container">
             <div className="row justify-content-center">
-                <div className="col-md-4 login-form-1">
+                <div className="col-md-12 col-md-4 login-form-1">
                     <h3>Login</h3>
                     <form onSubmit={ loginSubmit }>
                         <div className="form-group mb-2">
