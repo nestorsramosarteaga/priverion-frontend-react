@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { backendApi } from "../api";
 import { onAddEmployee, onDeleteEmployee, onSetActiveEmployee, onUpdateEmployee } from "../store";
 
 
@@ -15,7 +16,8 @@ export const useEmployeeStore = () => {
     }
 
     const startSavingEvent = async( employee ) => {
-        //* TODO: go to the backend
+        //* TODO: Update employee
+
 
         //* Everything OK
         if ( employee?.id ){
@@ -23,7 +25,8 @@ export const useEmployeeStore = () => {
             dispatch( onUpdateEmployee({...employee}) );
         } else {
             // Creando
-            dispatch( onAddEmployee({ ...employee, id: new Date().getTime() }) );
+            const { data : { data } } = await backendApi.post('/employees', employee);
+            dispatch( onAddEmployee({ ...employee, id: data.id }) );
         }
     }
 

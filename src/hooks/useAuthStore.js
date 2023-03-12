@@ -42,10 +42,9 @@ export const useAuthStore = () => {
         const token = localStorage.getItem('token');
         if( !token ) return dispatch( onLogout() );
         try {
-            const {} =  await backendApi.get('auth/renew');
+            const { data } =  await backendApi.get('auth/renew');
             localStorage.setItem('token', data.token);
-            localStorage.setItem('token-init-date', new Date().getTime() );
-            
+            localStorage.setItem('token-init-date', new Date().getTime() );            
             dispatch( onLogin({ id: data.id, name: data.name, email: data.email }) );
         } catch (error) {
            localStorage.clear();

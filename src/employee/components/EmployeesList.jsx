@@ -66,7 +66,6 @@ export const EmployeesList = () => {
                                 <i className="fa-solid fa-trash-can"></i>
                                 </button>
                             </td>
-
                           </tr>
                         ))  
                     }
