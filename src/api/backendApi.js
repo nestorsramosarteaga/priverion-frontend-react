@@ -3,10 +3,10 @@ import { getEnvVariables } from '../helpers';
 
 const { CRUD_API_URL } = getEnvVariables();
 
-const backendApiV1 = axios.create({
+const backendApi = axios.create({
     baseURL: CRUD_API_URL,
 });
 
 // TODO: config intercepters
 
-export default backendApiV1;
+export default backendApi;
