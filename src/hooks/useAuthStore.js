@@ -41,7 +41,6 @@ export const useAuthStore = () => {
     const checkAuthToken = async () => {
         const token = localStorage.getItem('token');
         if( !token ) return dispatch( onLogout() );
-
         try {
             const {} =  await backendApi.get('auth/renew');
             localStorage.setItem('token', data.token);
@@ -50,8 +49,13 @@ export const useAuthStore = () => {
             dispatch( onLogin({ id: data.id, name: data.name, email: data.email }) );
         } catch (error) {
            localStorage.clear();
-           dispatch( onLogout );
+           dispatch( onLogout() );
         }
+    }
+
+    const startLogout = () => {
+        localStorage.clear();
+        dispatch( onLogout() );
     }
 
     return{
@@ -64,6 +68,7 @@ export const useAuthStore = () => {
         startLogin,
         startRegister,
         checkAuthToken,
+        startLogout
     }
 
 }

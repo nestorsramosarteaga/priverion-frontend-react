@@ -129,7 +129,7 @@ export const EmployeeModal = () => {
         overlayClassName="modal-fondo"
         closeTimeoutMS={ 200 }
     >
-        <h1> New Employee </h1>
+        <h1> { activeEmployee?.id ? 'Edit employee' : 'New employee' } </h1>
         <hr />
         <form className="container" onSubmit={ onSubmit }>
 
