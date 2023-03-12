@@ -20,12 +20,11 @@ const registerFormsField = {
 
 export const LoginPage = () => {
 
-    const { startLogin, errorMessage } = useAuthStore();
+    const { startLogin, errorMessage, startRegister } = useAuthStore();
 
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange } = useForm( loginFormsField );
     const { registerName, registerEmail, registerPassword, registerPasswordConfirmation, onInputChange: onRegisterInputChange } = useForm( registerFormsField );
 
-    
     const loginSubmit = ( event ) => {
         event.preventDefault();
         startLogin({ email: loginEmail, password: loginPassword });
@@ -33,7 +32,11 @@ export const LoginPage = () => {
 
     const registerSubmit = ( event ) => {
         event.preventDefault();
-        console.log({ registerName, registerEmail, registerPassword, registerPasswordConfirmation });
+        if ( registerPassword !== registerPasswordConfirmation ) {
+            Swal.fire('Register error', 'The passwords do not match', 'error');
+            return;
+        }
+        startRegister({ name: registerName, email: registerEmail, password: registerPassword }); // , password_confirmation: registerPasswordConfirmation
     }
 
     useEffect(() => {
@@ -47,8 +50,8 @@ export const LoginPage = () => {
 
     return (
         <div className="container login-container">
-            <div className="row">
-                <div className="col-md-6 login-form-1">
+            <div className="row justify-content-center">
+                <div className="col-md-4 login-form-1">
                     <h3>Login</h3>
                     <form onSubmit={ loginSubmit }>
                         <div className="form-group mb-2">
@@ -81,7 +84,7 @@ export const LoginPage = () => {
                     </form>
                 </div>
 
-                <div className="col-md-6 login-form-2">
+                {/* <div className="col-md-6 login-form-2">
                     <h3>Register</h3>
                     <form onSubmit={ registerSubmit }>
                         <div className="form-group mb-2">
@@ -133,7 +136,7 @@ export const LoginPage = () => {
                                 value="Create Account" />
                         </div>
                     </form>
-                </div>
+                </div> */}
             </div>
         </div>
     )
