@@ -12,16 +12,16 @@ export const EmployeesList = () => {
 
     useEffect( () => {
       startLoadingEmployees()
-    }, []);
+    }, [])
 
-    const handleDelete = () => {
-        startDeletingEmployee();
-        // try {
-        //     // await axios.delete(`${backendApi}/employees/${id}`)
-        //     getEmployees()
-        // } catch (error) {
-        //     console.log(error);
-        // }      
+    const handleOpenModal = (employee) => {
+        setActiveEmployee(employee); 
+        openEmployeeModal();
+    }
+
+    const handleDelete = (employee) => {
+      setActiveEmployee(employee);
+      startDeletingEmployee(employee);
     }
 
     return (
@@ -47,14 +47,14 @@ export const EmployeesList = () => {
                             <td> {employee.phone} </td>
                             <td>
                               <Link 
-                                onClick={ () => { setActiveEmployee(employee); openEmployeeModal() } }
+                                onClick={ () => { handleOpenModal(employee) } }
                                 className="btn btn-warning mx-1"
                                 title="Edit"
                               >
                                 <i className="fa-solid fa-pen"></i>
                               </Link>
                               <button 
-                                onClick={ () => { setActiveEmployee(employee); handleDelete() }}
+                                onClick={ () => { handleDelete(employee) }}
                                 className="btn btn-danger mx-1"
                                 title="Delete"
                               >

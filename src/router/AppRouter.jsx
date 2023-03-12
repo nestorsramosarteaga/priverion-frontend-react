@@ -8,7 +8,6 @@ import { useAuthStore } from "../hooks";
 export const AppRouter = () => {
 
     const { checkAuthToken, status } = useAuthStore();
-    // const authStatus =  'not-authenticated'; // 'checking, 'authenticated', 'not-authenticated'
 
     useEffect(() => {
         checkAuthToken();

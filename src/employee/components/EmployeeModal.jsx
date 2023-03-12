@@ -25,7 +25,7 @@ Modal.setAppElement('#root');
 export const EmployeeModal = () => {
 
     const { isEmployeeModalOpen, closeEmployeeModal } = useUiStore();
-    const { activeEmployee, startSavingEvent } = useEmployeeStore();
+    const { activeEmployee, startSavingEvent, setActiveEmployee } = useEmployeeStore();
     const navigate = useNavigate();
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
@@ -98,7 +98,6 @@ export const EmployeeModal = () => {
             return;
         }
 
-        //* TODO:
         await startSavingEvent( formValues );
 
         closeEmployeeModal();
