@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { onAddEmployee, onSetActiveEmployee, onUpdateEmployee } from "../store";
+import { onAddEmployee, onDeleteEmployee, onSetActiveEmployee, onUpdateEmployee } from "../store";
 
 
 export const useEmployeeStore = () => {
@@ -16,17 +16,21 @@ export const useEmployeeStore = () => {
 
     const startSavingEvent = async( employee ) => {
         //* TODO: go to the backend
-        console.log( {employee} );
+
         //* Everything OK
         if ( employee?.id ){
             // Update
-            dispatch( onUpdateEmployee({...employee}) )
+            dispatch( onUpdateEmployee({...employee}) );
         } else {
             // Creando
-            dispatch( onAddEmployee({ ...employee, id: new Date().getTime() }) )
-
+            dispatch( onAddEmployee({ ...employee, id: new Date().getTime() }) );
         }
+    }
 
+    const startDeletingEmployee = () => {
+        //* TODO: go to the backend
+
+        dispatch( onDeleteEmployee() );
     }
 
     return {
@@ -35,6 +39,7 @@ export const useEmployeeStore = () => {
         activeEmployee,
         //* Methods
         setActiveEmployee,
+        startDeletingEmployee,
         startSavingEvent,
     }
 
